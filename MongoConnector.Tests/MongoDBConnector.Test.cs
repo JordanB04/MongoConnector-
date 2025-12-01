@@ -27,4 +27,20 @@ public void Ping_ReturnsFalse_WhenConnectionInvalid()
     Assert.False(connector.Ping());
 }
 
+[Fact]
+public async Task InsertAndReadData_Works()
+{
+    var connector = new MongoDBConnector(_mongo.GetConnectionString());
+    string name = "TestCollection";
+
+    for (int i = 1; i <= 20; i++)
+        await connector.InsertDataAsync(name, new MyData { Id = i, Value = $"Item {i}" });
+
+    var result = await connector.GetDataAsync(name, 14);
+
+    Assert.NotNull(result);
+    Assert.Equal(14, result.Id);
+}
+
+
 }
