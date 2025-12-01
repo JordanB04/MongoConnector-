@@ -19,4 +19,12 @@ public class MongoDBConnectorTests
         var connector = new MongoDBConnector(_mongo.GetConnectionString());
         Assert.True(connector.Ping());
     }
+
+    [Fact]
+public void Ping_ReturnsFalse_WhenConnectionInvalid()
+{
+    var connector = new MongoDBConnector("mongodb://localhost:9999");
+    Assert.False(connector.Ping());
+}
+
 }
