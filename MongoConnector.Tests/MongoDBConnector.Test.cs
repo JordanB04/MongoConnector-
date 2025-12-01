@@ -1,10 +1,22 @@
-﻿namespace MongoConnector.Tests;
+﻿using Testcontainers.MongoDb;
+using Xunit;
 
-public class UnitTest1
+namespace MongoConnector.Tests;
+
+public class MongoDBConnectorTests
 {
-    [Fact]
-    public void Test1()
-    {
+    private readonly MongoDbContainer _mongo;
 
+    public MongoDBConnectorTests()
+    {
+        _mongo = new MongoDbBuilder().Build();
+        _mongo.StartAsync().Wait();
+    }
+
+    [Fact]
+    public void Ping_ReturnsTrue_WhenServerIsRunning()
+    {
+        var connector = new MongoDBConnector(_mongo.GetConnectionString());
+        Assert.True(connector.Ping());
     }
 }
