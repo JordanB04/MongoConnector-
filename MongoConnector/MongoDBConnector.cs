@@ -14,16 +14,11 @@ public class MongoDBConnector
     }
 
     public bool Ping()
+    
     {
-        try
-        {
-            var command = new BsonDocument("ping", 1);
-            _database.RunCommand<BsonDocument>(command);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+    return false; // placeholder for now
+    
+    }
+
     }
 }
